@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="../static/index.css">  
+  
+</head>
+
+<body>
+ <div class="login container">
+	<h1>Heart Disease Detection Model</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+    	<div class="form-group text-left container" >
+    		<div>
+    	<label>Enter age in years</label>
+    	<input type="text" name="age" placeholder="age in years" required="required" />
+  </div>
+  <div>
+    <br/>
+      <label>Choose sex</label>
+<!--     <input type="text" name="sex" placeholder="0 or 1" required="required" />
+ -->    <select name="sex" id="sex">
+  <option value="1">male</option>
+  <option value="0">female</option>
+  
+</select>
+<br>
+</br>
+  </div>
+    
+    <div>
+      <label>Choose chest pain type</label>
+<!--     <input type="text" name="cpt" placeholder="0,1,2 or 3" required="required" />
+ -->
+<select name="cpt" id="cpt">
+  <option value="0">typical angina</option>
+  <option value="1">atypical angina</option>
+  <option value="2">non-anginal pain</option>
+  <option value="3">asymptomatic</option>
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Enter resting blood pressure</label>
+    <input type="text" name="restbp" placeholder="94 - 200" required="required" />
+    </div>
+    <br>
+   <div>
+      <label>Enter serum cholestoral in mg/dl</label>
+    <input type="text" name="schol" placeholder="126-564" required="required" />
+   </div>
+   <br>
+    <div>
+      <label>Is fasting blood sugar > 120 mg/dl</label>
+<!--     <input type="text" name="fbs" placeholder="0 or 1" required="required" />
+ -->   
+  <select name="fbs" id="fbs">
+    <option value="1">yes</option>
+    <option value="0">no</option>
+  
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Choose resting electrocardiographic results</label>
+<!--     <input type="text" name="restecg" placeholder="0 or 1" required="required" />
+ -->    <select name="restECG" id="restECG">
+  <option value="0">normal</option>
+  <option value="1">having ST-T wave abnormality</option>
+  <option value="2">showing left ventricular hypertrophy</option>
+  
+  
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Enter maximum heart rate achieved</label>
+    <input type="text" name="thalach" placeholder="71-202" required="required" />
+    </div>
+    <br>
+    <div>
+      <label>Choose whether patient has exercise induced angina or not</label>
+<!--     <input type="text" name="exang" placeholder="0 or 1" required="required" />
+ -->    
+ <select name="exang" id="exang">
+  <option value="0">no</option>
+  <option value="1">yes</option>
+  
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Enter ST depression induced by exercise relative to rest(old peak)</label>
+    <input type="text" name="oldpeak" placeholder="0.0-6.2" required="required" />
+    </div>
+    <br>
+    <div>
+      <label>Choose the slope of the peak exercise ST segment</label>
+<!--     <input type="text" name="slope" placeholder="0,1 or 2" required="required" />
+ -->  
+   <select name="slope" id="slope">
+  <option value="0">upsloping</option>
+  <option value="1">flat</option>
+  <option value="2">downsloping</option>
+  
+  
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Choose number of major vessels colored by flourosopy</label>
+    <!-- <input type="text" name="ca" placeholder="0 or 1" required="required" /> -->
+  <select name="ca" id="ca">
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+
+</select>
+    </div>
+    <br>
+    <div>
+      <label>Choose thal</label>
+   <!--  <input type="text" name="thal" placeholder="1,2 or 3" required="required" />  -->
+    <select name="thal" id="thal">
+  <option value="1">Normal</option>
+  <option value="2">Fixed Defect</option>
+  <option value="3">Reversable Defect</option>
+</select>   
+    </div>
+    <br>
+      
+				<button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+      </div>
+    </div>
+    </form>
+<br/>
+  
+   <div class="container text-center sandesh" >
+        {{ prediction_text }}
+
+   </div>
+
+ </div>
+
+
+</body>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="container font-italic text-left">
+  <b>age</b>: The person's age in years
+  <br/>
+  <b> sex:</b> The person's sex
+  <br/>
+  <b>cpt</b>: The chest pain experienced 
+  <br/>
+  <b>restbp</b>: The person's resting blood pressure (mm Hg on admission to the hospital)<br/>
+  <b>schol</b>: The person's cholesterol measurement in mg/dl<br/>
+  <b>fbs</b>: The person's fasting blood sugar (> 120 mg/dl<br/>
+  <b>restECG</b>: Resting electrocardiographic measurement <br/>
+  <b>thalach</b>: The person's maximum heart rate achieved<br/>
+  <b>exang</b>: Exercise induced angina <br/>
+  <b>oldpeak</b>: ST depression induced by exercise relative to rest 'ST' relates to positions on the ECG plot<br/>
+  <b>slope</b>: the slope of the peak exercise ST segment br/>
+  <b>ca</b>: The number of major vessels (0-3)<br/>
+  <b>thal</b>: A blood disorder called thalassemia <br/>
+</div> 
+</html>
